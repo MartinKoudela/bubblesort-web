@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="./output.css" rel="stylesheet">
-    <script src="./script.js"></script>
+    <script src="./script.js" defer></script>
     <title>Bubblesort - watch & learn</title>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -21,10 +21,16 @@
                 <input type="number" id="input"
                        class="rounded border border-gray-300 px-3 py-2 text-base text-gray-900 focus:border-gray-900 focus:outline-none">
             </label>
+            <button type="button" id="addNum"
+                    class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none">Add
+            </button>
+            <button type="button" id="sort"
+                    class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 focus:outline-none">Sort
+            </button>
 
         </form>
+        <div id="output" class="mt-4"></div>
     </section>
 </main>
-
 </body>
 </html>
