@@ -36,5 +36,5 @@ document.getElementById("sort").addEventListener("click", () => {
     bubbleSort(numbers);
     const end = performance.now();
     render();
-    document.getElementById("time").textContent = `Sorting took ${end - start} milliseconds.`;
+    document.getElementById("time").textContent = `Sorting took ${(end - start).toFixed(3)} milliseconds.`;
 });
