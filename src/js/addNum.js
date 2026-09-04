@@ -9,5 +9,10 @@ document.getElementById("addNum").addEventListener("click", () => {
     numbers.push(value);
     input.value = "";
     input.focus();
+
+    if (typeof resetVisualization === "function") {
+        resetVisualization();
+    }
+
     render();
 });

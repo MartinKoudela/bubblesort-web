@@ -2,6 +2,14 @@ const numbers = [];
 let steps = [];
 let current = 0;
 
+function resetVisualization() {
+    steps = [];
+    current = 0;
+    document.getElementById("chart").innerHTML = "";
+    document.getElementById("caption").textContent = "";
+    updateButtons();
+}
+
 function render() {
     document.getElementById("output").textContent = numbers.join(", ");
 }

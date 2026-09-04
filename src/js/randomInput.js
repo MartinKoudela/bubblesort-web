@@ -29,6 +29,9 @@ document.getElementById("confirm").addEventListener("click", () => {
         numbers.push(Math.floor(Math.random() * (max - min + 1)) + min);
     }
 
+    if (typeof resetVisualization === "function") {
+        resetVisualization();
+    }
     render();
     document.getElementById("randomPanel").classList.add("hidden");
 });
