@@ -2,9 +2,12 @@ const numbers = [];
 let steps = [];
 let current = 0;
 let bars = [];
+let timer = null;
 const BAR_BASE = "flex-1 rounded-t text-center text-xs text-white transition-all duration-300";
+const STEP_DELAY = 500;
 
 function resetVisualization() {
+    stopPlay();
     steps = [];
     current = 0;
     bars = [];
@@ -61,6 +64,7 @@ function showStep(n) {
 }
 
 document.getElementById("sort").addEventListener("click", () => {
+    stopPlay();
     steps = [];
     bubbleSort(numbers, (arr, i, j, type) => steps.push({snapshot: [...arr], i, j, type}));
     current = 0;
@@ -76,14 +80,49 @@ document.getElementById("sort").addEventListener("click", () => {
 });
 
 document.getElementById("prev").addEventListener("click", () => {
+    stopPlay();
     if (current > 0) showStep(--current);
 });
 
 document.getElementById("next").addEventListener("click", () => {
+    stopPlay();
     if (current < steps.length - 1) showStep(++current);
 });
+
+document.getElementById("play").addEventListener("click", () => {
+    if (timer === null) {
+        startPlay();
+    } else {
+        stopPlay();
+    }
+});
+
+function startPlay() {
+    if (current >= steps.length - 1) {
+        showStep(current = 0);
+    }
+
+    timer = setInterval(() => {
+        if (current < steps.length - 1) {
+            showStep(++current);
+        } else {
+            stopPlay();
+        }
+    }, STEP_DELAY);
+
+    document.getElementById("play").textContent = "⏸ Pause";
+}
+
+function stopPlay() {
+    if (timer !== null) {
+        clearInterval(timer);
+        timer = null;
+    }
+    document.getElementById("play").textContent = "▶ Play";
+}
 
 function updateButtons() {
     document.getElementById("prev").disabled = current === 0;
     document.getElementById("next").disabled = current >= steps.length - 1;
+    document.getElementById("play").disabled = steps.length === 0;
 }
