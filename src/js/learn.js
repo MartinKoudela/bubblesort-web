@@ -66,7 +66,10 @@ function showStep(n) {
 document.getElementById("sort").addEventListener("click", () => {
     stopPlay();
     steps = [];
+    const start = performance.now();
     bubbleSort(numbers, (arr, i, j, type) => steps.push({snapshot: [...arr], i, j, type}));
+    const end = performance.now();
+    document.getElementById("time").textContent = `Sorting took ${(end - start)} milliseconds.`;
     current = 0;
     render();
 
