@@ -3,3 +3,4 @@ src/output.css
 .idea/
 .vscode/
 .DS_Store
+vendor/
