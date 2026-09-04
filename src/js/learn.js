@@ -1,10 +1,13 @@
 const numbers = [];
 let steps = [];
 let current = 0;
+let bars = [];
+const BAR_BASE = "flex-1 rounded-t text-center text-xs text-white transition-all duration-300";
 
 function resetVisualization() {
     steps = [];
     current = 0;
+    bars = [];
     document.getElementById("chart").innerHTML = "";
     document.getElementById("caption").textContent = "";
     updateButtons();
@@ -21,6 +24,19 @@ function barColor(step, index) {
     return step.type === "swap" ? "bg-red-500" : "bg-yellow-400";
 }
 
+function buildChart(count) {
+    const chart = document.getElementById("chart");
+    chart.innerHTML = "";
+    bars = [];
+
+    for (let i = 0; i < count; i++) {
+        const bar = document.createElement("div");
+        bar.className = `${BAR_BASE} bg-blue-400`;
+        chart.append(bar);
+        bars.push(bar);
+    }
+}
+
 function showStep(n) {
     const step = steps[n];
     updateButtons();
@@ -29,15 +45,12 @@ function showStep(n) {
     }
 
     const max = Math.max(...step.snapshot);
-    const chart = document.getElementById("chart");
-    chart.innerHTML = "";
 
     step.snapshot.forEach((value, index) => {
-        const bar = document.createElement("div");
-        bar.className = `flex-1 rounded-t text-center text-xs text-white transition-all ${barColor(step, index)}`;
+        const bar = bars[index];
         bar.style.height = `${(value / max) * 100}%`;
         bar.textContent = value;
-        chart.append(bar);
+        bar.className = `${BAR_BASE} ${barColor(step, index)}`;
     });
 
     const a = step.snapshot[step.i];
@@ -52,12 +65,18 @@ document.getElementById("sort").addEventListener("click", () => {
     bubbleSort(numbers, (arr, i, j, type) => steps.push({snapshot: [...arr], i, j, type}));
     current = 0;
     render();
+
+    if (steps.length === 0) {
+        resetVisualization();
+        return;
+    }
+
+    buildChart(numbers.length);
     showStep(current);
 });
 
 document.getElementById("prev").addEventListener("click", () => {
     if (current > 0) showStep(--current);
-
 });
 
 document.getElementById("next").addEventListener("click", () => {
